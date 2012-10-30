@@ -1,0 +1,219 @@
+***************************************
+*        HTTP domain crawler          *
+***************************************
+This is probably one of the most stupid things I ever made, 
+but I don't like to drop already typed code.
+
+It is an HTTP crawler which looks for domains in <a> tags
+and sotres them into a sqlite database next to their IP address.
+It works recursively among the stored domains.
+So in theory it can walk arround all the existing Internet.
+
+Warning: It is a proof of concept! Very inneficient and probably buggy.
+
+Dependences: pyton2, beautifulsoup, sqlite3, urlib
+
+The usage is very simple, here an example:
+
+p4u@eni4c:~/python-git/domainCrawler (master)$ python2 domainCrawler.py 
+Domain Crawler
+Usage: domaincrawler <option> [params]
+Options:
+		-n <filename> : Creates new database named filename
+		-c <database> <URL> <#threads> : Starts crawling process from given URL using database
+		-a <database> : List all domains stored in database
+		-h : Shows this help
+
+p4u@eni4c:~/python-git/domainCrawler (master)$ python2 domainCrawler.py -n domains
+New database created at file domains
+
+p4u@eni4c:~/python-git/domainCrawler (master)$ python2 domainCrawler.py -a domains
+
+p4u@eni4c:~/python-git/domainCrawler (master)$ python2 domainCrawler.py -c domains http://slashdot.com 12
+## STARTING MAIN THREAD ##
+|Crawling: http://slashdot.com|
+## STARTING THREADS ##
+|----------------------------
+| Active threads: 2
+| Queue size: 0
+|----------------------------
+|----------------------------
+| Active threads: 2
+| Queue size: 0
+|----------------------------
+|----------------------------
+| Active threads: 2
+| Queue size: 0
+|----------------------------
+|Crawling: http://ad.doubleclick.net|
+|Crawling: http://techreport.com|
+|----------------------------
+| Active threads: 2
+| Queue size: 33
+|----------------------------
+|Crawling: http://networkworld.com|
+|Crawling: http://www.networkworld.com|
+|Crawling: http://www.medicaldaily.com|
+|Crawling: http://singularityhub.com|
+|Crawling: http://thenextweb.com|
+|Crawling: http://motherboard.vice.com|
+|Crawling: http://theintelhub.com|
+|Crawling: http://www.nature.com|
+|Crawling: http://slashdot.org|
+|Crawling: http://torrentfreak.com|
+|Crawling: http://bgr.com|
+|----------------------------
+| Active threads: 12
+| Queue size: 26
+|----------------------------
+|Crawling: http://www.ornl.gov|
+|Crawling: http://paritynews.com|
+|----------------------------
+| Active threads: 12
+| Queue size: 30
+|----------------------------
+|Crawling: http://tech.slashdot.org|
+|Crawling: http://www.ubuntuvibes.com|
+Cannot resolve lib1.isd.ornl.gov:8182
+|----------------------------
+| Active threads: 12
+| Queue size: 35
+|----------------------------
+|----------------------------
+| Active threads: 12
+| Queue size: 35
+|----------------------------
+
+[CTRL+C]
+
+p4u@eni4c:~/python-git/domainCrawler (master)$ python2 domainCrawler.py -a domains
+ad.doubleclick.net -> 209.85.148.148
+techreport.com -> 74.200.65.212
+networkworld.com -> 65.214.57.165
+www.networkworld.com -> 88.221.203.47
+www.medicaldaily.com -> 209.116.59.144
+singularityhub.com -> 199.27.134.217
+thenextweb.com -> 184.106.146.102
+motherboard.vice.com -> 184.73.209.110
+theintelhub.com -> 208.109.162.209
+www.nature.com -> 213.248.113.192
+slashdot.org -> 216.34.181.45
+torrentfreak.com -> 173.193.242.225
+bgr.com -> 72.233.2.58
+www.ornl.gov -> 128.219.176.20
+paritynews.com -> 174.122.46.8
+tech.slashdot.org -> 216.34.181.48
+www.ubuntuvibes.com -> 209.85.148.121
+roblimo.com -> 216.239.38.21
+richarddawkinsfoundation.org -> 174.129.212.2
+richarddawkins.net -> 75.101.145.87
+en.wikipedia.org -> 91.198.174.225
+www.securityweek.com -> 173.203.107.14
+www.itu.int -> 156.106.202.5
+twitter.com -> 199.59.150.39
+www.facebook.com -> 66.220.152.32
+rss.slashdot.org -> 209.85.148.121
+freshmeat.net -> 216.34.181.101
+feedproxy.google.com -> 209.85.148.118
+freecode.com -> 216.34.181.104
+geek.net -> 216.34.181.202
+geeknetmedia.com -> 216.34.181.238
+slashdot.jp -> 202.221.179.13
+www.doubleclick.com -> 209.85.148.102
+www.google.com -> 173.194.78.103
+qosim.doubleclick.net -> 216.73.92.91
+www.twitter.com -> 199.59.150.39
+t.co -> 199.16.156.11
+virtacore.com -> 69.65.110.234
+techreport.pricegrabber.com -> 64.156.13.50
+www.mars.com -> 213.248.113.202
+arabicedition.nature.com -> 210.168.91.210
+www.directive21.com -> 199.27.134.133
+blogs.nature.com -> 199.168.13.95
+www.purestcolloids.com -> 50.97.178.200
+www.natureasia.com -> 210.168.91.210
+network.nature.com -> 213.248.113.194
+www.therawfoodworld.com -> 67.199.120.50
+www.sbkb.org -> 128.6.20.132
+doublegain.leanbodrep.hop.clickbank.net -> 74.63.153.62
+btguard.com -> 209.44.102.196
+bit.ly -> 69.58.188.39
+a.collective-media.net -> 88.221.236.74
+www.theintelhub.com -> 208.109.162.209
+ryandownie.com -> 209.240.81.170
+www.shadethemotionpicture.com -> 208.109.162.209
+resources.networkworld.com -> 65.221.110.118
+www.youtube.com -> 209.85.148.136
+itjobs.networkworld.com -> 64.13.138.107
+creativecommons.org -> 72.51.46.230
+solutioncenters.networkworld.com -> 65.221.110.105
+abcnews.go.com -> 68.71.212.40
+sustainability-ornl.org -> 128.219.14.56
+latino.foxnews.com -> 213.248.113.178
+ut-battelle.org -> 128.219.176.20
+cloudflare.com -> 173.245.60.249
+events.networkworld.com -> 23.23.121.255
+neutrons.ornl.gov -> 128.219.176.24
+www.nytimes.com -> 170.149.168.130
+jobs.ornl.gov -> 128.219.176.20
+events.networkworld.com -> 23.21.174.147
+www.linkedin.com -> 216.52.242.80
+www.squidoo.com -> 64.225.155.21
+www.flickr.com -> 87.248.105.216
+m.networkworld.com -> 50.57.117.239
+m.networkworld.com -> 50.57.117.239
+www.americanpearl.com -> 68.142.205.137
+www.techwords.com -> 64.124.14.63
+www.singularityweblog.com -> 50.57.215.80
+www.ers.usda.gov -> 162.79.16.192
+www.blogger.com -> 209.85.148.191
+careers.idg.com -> 63.211.160.21
+www.jpss.noaa.gov -> 140.90.33.21
+www.networkworldmediakit.com -> 66.96.147.104
+www.jpost.com -> 94.127.75.170
+www.ctvnews.ca -> 213.248.113.179
+feeds.feedburner.com -> 209.85.148.118
+www.monkey.org -> 75.102.5.19
+www.AWAKEN.com -> 74.220.215.227
+www.passagesmalibu.com -> 72.52.210.179
+spectrum.ieee.org -> 213.248.113.177
+go.usa.gov -> 216.128.241.32
+3.bp.blogspot.com -> 209.85.148.139
+www.thesundaytimes.co.uk -> 213.248.113.210
+www.oakridge.doe.gov -> 198.207.239.8
+truejay.com -> 72.32.231.8
+alt.engadget.com -> 195.93.85.49
+www.stylesurge.com -> 64.13.239.189
+images.medicaldaily.com -> 68.232.35.229
+lenashagieva.com -> 173.203.204.123
+www.thisrecording.com -> 65.39.205.54
+www.singularityhub.com -> 66.240.232.112
+www.nih.gov -> 137.187.25.43
+www.itworld.com -> 23.21.168.45
+tiheum.deviantart.com -> 199.15.160.100
+www.techhive.com -> 70.42.185.60
+bldgblog.blogspot.com -> 209.85.148.132
+matrixsynth.blogspot.com -> 209.85.148.132
+www.cdc.gov -> 213.248.113.211
+negrophonic.com -> 69.163.184.27
+www.counselheal.com -> 209.116.59.144
+thoughtcatalog.com -> 76.74.254.120
+www.ericmmartin.com -> 204.197.248.152
+betanews.com -> 69.65.109.143
+science.energy.gov -> 205.254.148.104
+thediplomat.com -> 69.164.223.86
+www.devour.com -> 50.23.249.68
+techcrunch.com -> 74.200.247.61
+1.bp.blogspot.com -> 209.85.148.139
+www.economist.com -> 64.14.173.20
+code.google.com -> 209.85.148.139
+thesocietypages.org -> 69.164.207.151
+c3046032.r32.cf0.rackcdn.com -> 146.82.2.122
+www.properlydecent.com -> 46.19.38.61
+c3414097.r97.cf0.rackcdn.com -> 146.82.2.99
+www.naturenplanet.com -> 209.116.59.158
+
+p4u@eni4c:~/python-git/domainCrawler (master)$ ls
+domainCrawler.py  domains
+p4u@eni4c:~/python-git/domainCrawler (master)$ 
+
